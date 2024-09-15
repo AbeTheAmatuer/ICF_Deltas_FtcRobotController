@@ -15,6 +15,8 @@ public class TeleOp extends LinearOpMode {
     DcMotor backRight;
    
 public void runOpMode() {
+
+    //Instantiating all the motors with the names from the config
     backLeft = hardwareMap.get (DcMotor.class,"backleft");
     backRight = hardwareMap.get (DcMotor.class,"backright");
     frontLeft= hardwareMap.get (DcMotor.class,"frontleft");
@@ -45,17 +47,18 @@ public void runOpMode() {
     frontRight.setPower(rightFrontPower); */
     
           
-      
+                //Setting x and y to the values returned by the left joystick on the x and y axes  
                 float x = this.gamepad1.left_stick_x;
                 float y = this.gamepad1.left_stick_y * -1;
+                //Turn x is the right gamepad x value, move the right joystick left to rotate in place clockwise, move it left to rotate in place counterclockwise
                 float turnX = this.gamepad1.right_stick_x;
             
             
-            frontRight.setPower((-x+y) + (turnX * -1)); 
-            frontLeft.setPower((x+y) + turnX);
+                frontRight.setPower((-x+y) + (turnX * -1)); 
+                frontLeft.setPower((x+y) + turnX);
             
-          backRight.setPower(x+y + (turnX * -1));
-          backLeft.setPower(-x+y + turnX);
+                backRight.setPower(x+y + (turnX * -1));
+                backLeft.setPower(-x+y + turnX);
           
   telemetry.addData("data", "x: " + x + "y: " +y + "turnX" + turnX);
    telemetry.update();
