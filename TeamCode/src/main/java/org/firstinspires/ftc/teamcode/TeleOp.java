@@ -1,67 +1,50 @@
 package org.firstinspires.ftc.teamcode;
+
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-
 @TeleOp
 
-
-public class TeleOp extends LinearOpMode {
-    DcMotor frontLeft;
-    DcMotor frontRight;
-    DcMotor backLeft;
-    DcMotor backRight;
-   
-public void runOpMode() {
+public class IbrahimTeleOp extends LinearOpMode {
+    @Override
+    
+public void runOpMode() throws InterruptedException{
 
     //Instantiating all the motors with the names from the config
-    backLeft = hardwareMap.get (DcMotor.class,"backleft");
-    backRight = hardwareMap.get (DcMotor.class,"backright");
-    frontLeft= hardwareMap.get (DcMotor.class,"frontleft");
-    frontRight= hardwareMap.get (DcMotor.class,"frontright");
+    DcMotor backLeft = hardwareMap.get (DcMotor.class,"backleft");
+    DcMotor backRight = hardwareMap.get (DcMotor.class,"backright");
+    DcMotor frontLeft= hardwareMap.get (DcMotor.class,"frontleft");
+    DcMotor frontRight= hardwareMap.get (DcMotor.class,"frontright");
    
-    backLeft.setDirection(DcMotor.Direction.REVERSE);
-   // frontLeft.setDirection(DcMotor.Direction.REVERSE);
+    backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+    frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+    
     waitForStart();
-
+    
+    if(isStopRequested()) return;
 
     while (opModeIsActive()) {
+       double y = -gamepad1.left_stick_y;
+       double x = gamepad1.left_stick_x * 1.1;
+       double rx = -gamepad1.right_stick_x;
        
-     /*  
-      float fwdBackPower = -gamepad1.right_stick_y;
-       float strafePower= gamepad1.right_stick_x;
-       float turnPower = gamepad1.left_stick_x; 
+       double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
        
-
-       float leftFrontPower = fwdBackPower + turnPower + strafePower;
-       float rightFrontPower = fwdBackPower - turnPower - strafePower;
-       float leftBackPower = fwdBackPower + turnPower - strafePower;
-       float rightBackPower = fwdBackPower - turnPower + strafePower; 
-
-   
-    backLeft.setPower(leftBackPower);
-    backRight.setPower(rightBackPower);
-    frontLeft.setPower(leftFrontPower);
-    frontRight.setPower(rightFrontPower); */
-    
+       double fL = (y + x + rx);
+       double bL = (y - x + rx);
+       double fR = (y - x - rx);
+       double bR = (y + x - rx);
+       
+       frontRight.setPower(fL);
+       backLeft.setPower(bL);
+       frontLeft.setPower(fR);
+       backRight.setPower(bR);
+     
           
-                //Setting x and y to the values returned by the left joystick on the x and y axes  
-                float x = this.gamepad1.left_stick_x;
-                float y = this.gamepad1.left_stick_y * -1;
-                //Turn x is the right gamepad x value, move the right joystick left to rotate in place clockwise, move it left to rotate in place counterclockwise
-                float turnX = this.gamepad1.right_stick_x;
-            
-            
-                frontRight.setPower((-x+y) + (turnX * -1)); 
-                frontLeft.setPower((x+y) + turnX);
-            
-                backRight.setPower(x+y + (turnX * -1));
-                backLeft.setPower(-x+y + turnX);
-          
-  telemetry.addData("data", "x: " + x + "y: " +y + "turnX" + turnX);
-   telemetry.update();
-}
+  //telemetry.addData("data", "x: " + x + "y: " +y + "turnX" + );
+   //telemetry.update();
+        }
     }
-  }
+}    
