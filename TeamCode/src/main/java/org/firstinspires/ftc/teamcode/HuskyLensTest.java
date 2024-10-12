@@ -62,6 +62,11 @@ import java.util.concurrent.TimeUnit;
  */
 @Autonomous(name = "Sensor: HuskyLens", group = "Sensor")
 
+/*ABOUT AND HOW TO USE, IMPORTANT 
+
+Tracks blue, red and yellow speciments. Need to train on the huskylens sensor, use Color Recognition mode. Yellow is id1, blue is id2 and red is id3. 
+*/
+
 public class HuskyLensTest extends LinearOpMode {
 
     private final int READ_PERIOD = 1;
