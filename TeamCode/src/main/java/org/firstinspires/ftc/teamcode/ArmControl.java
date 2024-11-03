@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class ArmControl extends LinearOpMode{
     @Override
-    //CHANGE FROM ANDROID STUDIO
+    //CHANGE FROM ANDROID STUDIO Yaya
    public void runOpMode() throws InterruptedException {
         DcMotor leftMotor = hardwareMap.dcMotor.get("left_motor");
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
