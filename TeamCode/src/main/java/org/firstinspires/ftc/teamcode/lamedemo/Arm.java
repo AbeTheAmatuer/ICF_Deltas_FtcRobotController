@@ -21,26 +21,9 @@ public class Arm {
     private static float SHOULDER_RETRACT_POWER = 0.25f;
     private static float ELBOW_RETRACT_POWER = 0.25f;
 
-    /*
-     * Variables to store the speed the intake servo should be set at to intake, and
-     * deposit game elements.
-     */
-    final double INTAKE_COLLECT = 0;
-    final double INTAKE_OFF = 0.5;
-    final double INTAKE_DEPOSIT = 1;
-
-    /*
-     * Variables to store the positions that the wrist should be set to when folding
-     * in, or folding out.
-     */
-    final double WRIST_FOLDED_IN = 0.8333;
-    final double WRIST_FOLDED_OUT = 0.5;
-
     private DcMotor elbow;
     private DcMotor shoulder;
     private Telemetry telemetry;
-    private Servo intake = null; // the active intake servo
-    private Servo wrist = null; // the wrist servo
 
     public Arm(HardwareMap hardwareMap, Telemetry telemetry) {
         this.telemetry = telemetry;
@@ -56,10 +39,6 @@ public class Arm {
 
         shoulder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shoulder.setDirection(DcMotor.Direction.FORWARD);
-
-        /* Make sure that the intake is off, and the wrist is folded in. */
-        intake.setPosition(INTAKE_OFF);
-        wrist.setPosition(WRIST_FOLDED_IN);
     }
 
     public void positionArmForSample() {
@@ -70,17 +49,18 @@ public class Arm {
         elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elbow.setTargetPosition(ELBOW_SAMPLE_PICK_POSITION);
         elbow.setPower(ELBOW_EXPAND_POWER);
-
-        wrist.setPosition(WRIST_FOLDED_OUT);
-        // intake.setPower(INTAKE_COLLECT);
     }
 
-    public void pickSampleIntake() {
-        intake.setPosition(INTAKE_COLLECT);
+    public void moveElbowUp() {
+        elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        elbow.setTargetPosition(shoulder.getCurrentPosition() + 10);
+        elbow.setPower(ELBOW_EXPAND_POWER);
     }
-    
-    public void stopSampleIntake() {
-        intake.setPosition(INTAKE_OFF);
+
+    public void moveElbowDown() {
+        elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        elbow.setTargetPosition(shoulder.getCurrentPosition() - 10);
+        elbow.setPower(ELBOW_EXPAND_POWER);
     }
 
     public void positionArmForFirstBasket() {
@@ -95,10 +75,6 @@ public class Arm {
         elbow.setPower(ELBOW_EXPAND_POWER);
     }
 
-    public void depositSampleInBasket() {
-        intake.setPosition(INTAKE_DEPOSIT);
-    }
-
     public void retractArm() {
         shoulder.setTargetPosition(SHOULDER_BASKET_RETRACT_POSITION);
         shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -109,13 +85,10 @@ public class Arm {
         elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elbow.setPower(ELBOW_RETRACT_POWER);
-
-        intake.setPosition(INTAKE_OFF);
-        wrist.setPosition(WRIST_FOLDED_IN);
     }
 
     // Stop motor if not busy
-    public void rest() {
+    public void restArm() {
         elbow.setPower(0);
         shoulder.setPower(0);
     }
@@ -123,8 +96,6 @@ public class Arm {
     public void printTelemetry() {
         telemetry.addData("Elbow Motor Position", elbow.getCurrentPosition());
         telemetry.addData("Shoulder Motor Position", shoulder.getCurrentPosition());
-        telemetry.addData("Wrist Servo Motor Position", wrist.getPosition());
-        telemetry.addData("Intake Servo Motor Position", intake.getPosition());
         telemetry.update();
     }
 }
