@@ -61,7 +61,7 @@ public class MainTeleOp extends LinearOpMode {
                 arm.retractArm();
                 armInDepositPosition = false;
             } else { //stop running intake if not necessary to run
-                arm.stopIntake();
+                intake.stopIntake();
                 armInDepositPosition = false;
             }
 

@@ -30,9 +30,6 @@ public class Arm {
 
         elbow = hardwareMap.get(DcMotor.class, "elbow");
         shoulder = hardwareMap.get(DcMotor.class, "shoulder");
-        /* Define and initialize servos. */
-        intake = hardwareMap.get(Servo.class, "intake");
-        wrist = hardwareMap.get(Servo.class, "wrist");
 
         elbow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         elbow.setDirection(DcMotor.Direction.FORWARD);

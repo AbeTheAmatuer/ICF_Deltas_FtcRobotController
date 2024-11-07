@@ -12,16 +12,16 @@ public class Intake {
      * Variables to store the speed the intake servo should be set at to intake, and
      * deposit game elements.
      */
-    private static int final double INTAKE_COLLECT = 0;
-    private static int final double INTAKE_OFF = 0.5;
-    private static int final double INTAKE_DEPOSIT = 1;
+    private static final double INTAKE_COLLECT = 0;
+    private static final double INTAKE_OFF = 0.5;
+    private static final double INTAKE_DEPOSIT = 1;
 
     /*
      * Variables to store the positions that the wrist should be set to when folding
      * in, or folding out.
      */
-    private static int final double WRIST_FOLDED_IN = 0.8333;
-    private static int final double WRIST_FOLDED_OUT = 0.5;
+    private static final double WRIST_FOLDED_IN = 0;
+    private static final double WRIST_FOLDED_OUT = 0.25;
 
     private Telemetry telemetry;
     private Servo intake = null; // the active intake servo
