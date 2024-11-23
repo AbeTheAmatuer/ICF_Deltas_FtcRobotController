@@ -53,13 +53,13 @@ public class Arm {
     }
 
     public void moveElbowUp() {
-        elbow.setTargetPosition(elbow.getCurrentPosition() + 25);
+        elbow.setTargetPosition(elbow.getCurrentPosition() - 25);
         elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elbow.setPower(ELBOW_EXPAND_POWER);
     }
 
     public void moveShoulderUp() {
-        shoulder.setTargetPosition(shoulder.getCurrentPosition() - 25);
+        shoulder.setTargetPosition(shoulder.getCurrentPosition() + 25);
         shoulder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         shoulder.setPower(ELBOW_EXPAND_POWER);
     }
