@@ -12,13 +12,13 @@ import java.lang.Thread;
 
 public class Arm {
 
-    private static int SHOULDER_BASKET_EXPAND_POSITION = 650;
+    private static int SHOULDER_BASKET_EXPAND_POSITION = 671;
     private static int SHOULDER_BASKET_RETRACT_POSITION = 5;
-    private static int ELBOW_BASKET_EXPAND_POSITION = 350;
+    private static int ELBOW_BASKET_EXPAND_POSITION = 398;
     private static int ELBOW_BASKET_RETRACT_POSITION = 1;
 
-    private static int SHOULDER_SAMPLE_PICK_POSITION = 491;
-    private static int ELBOW_SAMPLE_PICK_POSITION = 568;
+    private static int SHOULDER_SAMPLE_PICK_POSITION = 156;
+    private static int ELBOW_SAMPLE_PICK_POSITION = 362;
 
     private static float SHOULDER_EXPAND_POWER = 0.5f;
     private static float ELBOW_EXPAND_POWER = 0.75f;
@@ -43,9 +43,9 @@ public class Arm {
     }
     
     public void positionArmForSample() {
-       //shoulder.setTargetPosition(SHOULDER_SAMPLE_PICK_POSITION);
-        //shoulder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //shoulder.setPower(SHOULDER_EXPAND_POWER);
+       shoulder.setTargetPosition(SHOULDER_SAMPLE_PICK_POSITION);
+        shoulder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        shoulder.setPower(SHOULDER_EXPAND_POWER);
         
         elbow.setTargetPosition(ELBOW_SAMPLE_PICK_POSITION);
         elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -53,7 +53,7 @@ public class Arm {
     }
 
     public void moveElbowUp() {
-        elbow.setTargetPosition(elbow.getCurrentPosition() + 50);
+        elbow.setTargetPosition(elbow.getCurrentPosition() + 25);
         elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elbow.setPower(ELBOW_EXPAND_POWER);
     }
@@ -70,14 +70,14 @@ public class Arm {
     }
 
     public void moveElbowDown() {
-        elbow.setTargetPosition(elbow.getCurrentPosition() - 50);
+        elbow.setTargetPosition(elbow.getCurrentPosition() - 25);
         elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elbow.setPower(ELBOW_EXPAND_POWER);
     }
 
     public void positionArmForFirstBasket() {
-        //shoulder.setTargetPosition(SHOULDER_BASKET_EXPAND_POSITION);
-        //shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        shoulder.setTargetPosition(SHOULDER_BASKET_EXPAND_POSITION);
+        shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //shoulder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         //shoulder.setPower(SHOULDER_EXPAND_POWER);
 
