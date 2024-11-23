@@ -18,10 +18,11 @@ public class MainTeleOp extends LinearOpMode {
         // Initialize the drivetrain and Arm
         drivetrain = new DriveTrain(hardwareMap, telemetry);
         arm = new Arm(hardwareMap, telemetry);
-        intake = new Intake(hardwareMap, telemetry);
+       intake = new Intake(hardwareMap, telemetry);
 
         waitForStart();
-
+        
+     //   arm.start();
         while (opModeIsActive()) {
             // Read gamepad inputs
             double drive = -gamepad1.left_stick_y;
@@ -31,24 +32,28 @@ public class MainTeleOp extends LinearOpMode {
             // Drive the robot
             drivetrain.drive(drive, strafe, rotate);
 
+           //     intake.positionIntakeForSample();
+            //    arm.positionArmForSample();
+
+             //   arm.positionArmForFirstBasket();
             //position arm and intake for sample
-            if (gamepad1.a) {
+          if (gamepad1.a) {
                 intake.positionIntakeForSample();
                 arm.positionArmForSample();
                 armInDepositPosition = false;
             } //position arm for first basket
-            else if (gamepad1.b) {
-                arm.positionArmForFirstBasket();
+             if (gamepad1.b) {
+               arm.positionArmForFirstBasket();
                 armInDepositPosition = true;
                 //pick sample
             } else if (gamepad1.right_trigger > 0.4) {
-                intake.pickSample();
+               intake.pickSample();
                 armInDepositPosition = false;
                 //deposit sample in basket
-            } else if (gamepad1.left_trigger > 0.4 && armInDepositPosition) {
-                intake.depositSample();
+            } else if (gamepad1.left_trigger > 0.4 ) {
+               intake.depositSample();
                 //move elbo up
-            } else if (gamepad1.dpad_up) {
+            }  else if (gamepad1.dpad_up) {
                 arm.moveElbowUp();
                 armInDepositPosition = false;
                 //move elbo down
@@ -56,24 +61,29 @@ public class MainTeleOp extends LinearOpMode {
                 arm.moveElbowDown();
                 armInDepositPosition = false;
                 //retract the whole arm
+            }else if (gamepad1.dpad_left){
+                arm.moveShoulderDown();
+            }else if(gamepad1.dpad_right){
+                arm.moveShoulderUp();
+            
             } else if (gamepad1.x) {
-                intake.retractIntake();
+               intake.retractIntake();
                 arm.retractArm();
                 armInDepositPosition = false;
-            } else { //stop running intake if not necessary to run
-                intake.stopIntake();
+            } else {
+            //stop running intake if not necessary to run
+              intake.stopIntake();
                 armInDepositPosition = false;
             }
-
             /*
              * else if (!leftMotor.isBusy()) {
              * arm.rest();
              * }
              */
-            telemetry.addData("Is robot arm in deposit position", armInDepositPosition);
+           // telemetry.addData("Is robot arm in deposit position", armInDepositPosition);
             // drivetrain.printTelemetry();
+        //    arm.printTelemetry();
             arm.printTelemetry();
-            telemetry.update();
         }
     }
 }
